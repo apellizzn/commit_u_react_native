@@ -17,7 +17,6 @@ class CardsScreen extends React.PureComponent {
 
     this.state = {
       cards,
-      columns,
       rows,
     };
   }
