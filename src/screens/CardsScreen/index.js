@@ -8,10 +8,10 @@ class CardsScreen extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    const seed = Array(8).fill().map((_, index) => ({ label: index }));
+    const seed = Array(8).fill().map((_, index) => ({ label: index, flipped: false }));
     const cards = [...seed, ...seed]
-      .sort(() => Math.round(Math.random()))
-      .map((card, index) => ({ ...card, index }));
+      .map((card, index) => ({ ...card, index }))
+      .sort(() => Math.round(Math.random()));
     const columns = Math.ceil(Math.sqrt(cards.length));
     const rows = cards.length / columns;
 
@@ -21,10 +21,19 @@ class CardsScreen extends React.PureComponent {
     };
   }
 
+  show = card => ({ ...card, flipped: true })
+
+  reveal = index =>
+    this.state.cards.map(card => card.index === index ? this.show(card) : card)
+
+  flip = (index, label) => {
+    this.setState({ cards: this.reveal(index) })
+  }
+
   render() {
     return(
       <View style={styles.container}>
-        <CardList {...this.state} />
+        <CardList {...this.state} flip={this.flip} />
       </View>
     );
   }

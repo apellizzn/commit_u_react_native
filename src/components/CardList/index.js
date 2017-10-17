@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import Card from '../Card';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 
-const CardList = ({ cards, rows }) => {
+const CardList = ({ cards, rows, flip }) => {
   const rowsToRender = Array(rows).fill().map((_, rIndex) =>
     (
       <Row key={rIndex}>
         {
           cards
             .filter(({ index }) => index % rows === rIndex)
-            .map(card => (<Col key={card.index}><Card {...card} /></Col>))
+            .map(card => (<Col key={card.index}><Card flip={flip} {...card} /></Col>))
         }
       </Row>
     ),
@@ -28,6 +28,7 @@ CardList.propTypes = {
     }),
   ).isRequired,
   rows: PropTypes.number.isRequired,
+  flip: PropTypes.func.isRequired,
 };
 
 export default CardList;
