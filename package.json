@@ -30,6 +30,7 @@
     "react": "16.0.0-alpha.12",
     "react-native": "^0.48.4",
     "react-native-easy-grid": "^0.1.15",
-    "react-native-flip-view": "git://github.com/jp928/react-native-flip-view.git"
+    "react-native-flip-view": "git://github.com/jp928/react-native-flip-view.git",
+    "react-native-modalbox": "^1.4.2"
   }
 }

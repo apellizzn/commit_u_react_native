@@ -1,12 +1,16 @@
 import React from 'react';
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 import CardList from '../../components/CardList';
 import styles from './styles';
+import Modal from 'react-native-modalbox';
 
 class CardsScreen extends React.PureComponent {
   constructor(props) {
     super(props);
+    this.state = this.seed();
+  }
 
+  seed = () => {
     const seed = Array(8).fill().map((_, index) => ({ label: index, flipped: false }));
     const cards = [...seed, ...seed]
       .map((card, index) => ({ ...card, index }))
@@ -14,16 +18,14 @@ class CardsScreen extends React.PureComponent {
     const columns = Math.ceil(Math.sqrt(cards.length));
     const rows = cards.length / columns;
 
-    this.state = {
-      cards,
-      rows,
-      previousCard: null,
-    };
+    return { cards, rows, previousCard: null, win: false };
   }
 
   show = card => ({ ...card, flipped: true })
 
   hide = card => ({ ...card, flipped: false })
+
+  reset = () => this.setState(this.seed());
 
   reveal = index =>
     this.state.cards.map(card => (card.index === index ? this.show(card) : card))
@@ -39,16 +41,18 @@ class CardsScreen extends React.PureComponent {
     });
   }
 
-
   flip = (index, label) => {
+    let win = false;
     const previousCard = this.state.previousCard;
     if (!previousCard) {
       this.setState({ cards: this.reveal(index), previousCard: { index, label } });
     } else {
       if (label !== previousCard.label) {
         setTimeout(() => this.rollback(previousCard.index, index), 1500);
+      } else {
+        win = this.state.cards.filter(({ flipped }) => !flipped).length === 1;
       }
-      this.setState({ cards: this.reveal(index), previousCard: null });
+      this.setState({ cards: this.reveal(index), previousCard: null, win });
     }
   }
 
@@ -56,6 +60,9 @@ class CardsScreen extends React.PureComponent {
     return (
       <View style={styles.container}>
         <CardList {...this.state} flip={this.flip} />
+        <Modal style={styles.modal} coverScreen isOpen={this.state.win} onClosed={this.reset} position="center">
+          <Text style={styles.text}>You won! Swipe down to play again</Text>
+        </Modal>
       </View>
     );
   }
