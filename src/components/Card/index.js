@@ -1,14 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import FlipView from 'react-native-flip-view';
-import { Easing, Text, TouchableWithoutFeedback, View } from 'react-native';
+import { Easing, Image, Text, TouchableWithoutFeedback, View } from 'react-native';
 import styles from './styles';
 
 const Card = ({ index, label, flipped, flip }) => {
   const back = (
     <TouchableWithoutFeedback>
       <View style={[styles.cardView, styles.frontView]}>
-        <Text>{label}</Text>
+        <Image
+          style={styles.cardImage}
+          source={{ uri: label }}
+        />
       </View>
     </TouchableWithoutFeedback>
   );
@@ -37,7 +40,7 @@ const Card = ({ index, label, flipped, flip }) => {
 
 Card.propTypes = {
   index: PropTypes.number.isRequired,
-  label: PropTypes.number.isRequired,
+  label: PropTypes.string.isRequired,
   flipped: PropTypes.bool.isRequired,
   flip: PropTypes.func.isRequired,
 };

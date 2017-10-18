@@ -26,6 +26,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-21.0.0.tar.gz",
     "react-native-easy-grid": "^0.1.15",
     "react-native-flip-view": "git://github.com/jp928/react-native-flip-view.git",
-    "react-native-modalbox": "^1.4.2"
+    "react-native-modalbox": "^1.4.2",
+    "react-navigation": "^1.0.0-beta.15"
   }
 }

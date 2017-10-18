@@ -1,10 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Text, View } from 'react-native';
+import Modal from 'react-native-modalbox';
 import CardList from '../../components/CardList';
 import styles from './styles';
-import Modal from 'react-native-modalbox';
 
 class CardsScreen extends React.PureComponent {
+  static navigationOptions = {
+    title: 'Memory',
+  };
+
   constructor(props) {
     super(props);
     this.state = this.seed();
@@ -20,12 +25,14 @@ class CardsScreen extends React.PureComponent {
   }
 
   seed = () => {
-    const seed = Array(8).fill().map((_, index) => ({ label: index, flipped: false }));
+    const seed = this.props.navigation.state.params.photos.map(photo => (
+      { label: photo, flipped: false }
+    ));
     const cards = this.shuffle([...seed, ...seed])
-      .map((card, index) => ({ ...card, index }));
-
+      .map((card, index) => ({ ...card, index }))
+      .sort(() => Math.round(Math.random()));
     const columns = Math.ceil(Math.sqrt(cards.length));
-    const rows = cards.length / columns;
+    const rows = Math.floor(cards.length / columns);
 
     return { cards, rows, previousCard: null, win: false };
   }
@@ -34,10 +41,9 @@ class CardsScreen extends React.PureComponent {
 
   hide = card => ({ ...card, flipped: false })
 
-  reset = () => this.setState(this.seed());
+  reset = () => this.props.navigation.navigate('Home', { photos: [] });
 
-  reveal = index =>
-    this.state.cards.map(card => (card.index === index ? this.show(card) : card))
+  reveal = index => this.state.cards.map(card => (card.index === index ? this.show(card) : card))
 
   rollback = (indexA, indexB) => {
     this.setState({
@@ -75,6 +81,27 @@ class CardsScreen extends React.PureComponent {
       </View>
     );
   }
+}
+
+CardsScreen.defaultProps = {
+  navigation: {
+    state: {
+      params: {
+        photos: [],
+      },
+    },
+  },
+}
+
+CardsScreen.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+    state: PropTypes.shape({
+      params: PropTypes.shape({
+        photos: PropTypes.arrayOf(PropTypes.string),
+      }),
+    }),
+  }).isRequired,
 }
 
 export default CardsScreen;
