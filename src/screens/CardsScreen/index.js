@@ -10,11 +10,20 @@ class CardsScreen extends React.PureComponent {
     this.state = this.seed();
   }
 
+  shuffle = (cards) => {
+    const array = cards;
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+
   seed = () => {
     const seed = Array(8).fill().map((_, index) => ({ label: index, flipped: false }));
-    const cards = [...seed, ...seed]
-      .map((card, index) => ({ ...card, index }))
-      .sort(() => Math.round(Math.random()));
+    const cards = this.shuffle([...seed, ...seed])
+      .map((card, index) => ({ ...card, index }));
+
     const columns = Math.ceil(Math.sqrt(cards.length));
     const rows = cards.length / columns;
 
