@@ -1,8 +1,8 @@
 import React from 'react';
 import { Text, View } from 'react-native';
+import Modal from 'react-native-modalbox';
 import CardList from '../../components/CardList';
 import styles from './styles';
-import Modal from 'react-native-modalbox';
 
 class CardsScreen extends React.PureComponent {
   constructor(props) {
@@ -25,7 +25,7 @@ class CardsScreen extends React.PureComponent {
       .map((card, index) => ({ ...card, index }));
 
     const columns = Math.ceil(Math.sqrt(cards.length));
-    const rows = cards.length / columns;
+    const rows = Math.floor(cards.length / columns);
 
     return { cards, rows, previousCard: null, win: false };
   }
