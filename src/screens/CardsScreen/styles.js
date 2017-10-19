@@ -14,8 +14,13 @@ const styles = StyleSheet.create({
   },
   text: {
     flexDirection: 'column',
-    color: 'red',
-    fontSize: 25,
+    color: 'white',
+    fontSize: 24,
+    padding: 40,
+    textAlign: 'center',
+    textShadowColor: '#000',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
   },
 });
 

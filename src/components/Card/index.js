@@ -8,7 +8,7 @@ const Card = ({ index, label, flipped, flip }) => {
   const back = (
     <TouchableWithoutFeedback>
       <View style={[styles.cardView, styles.frontView]}>
-        <Text>{label}</Text>
+        <Text style={styles.cardText}>{label}</Text>
       </View>
     </TouchableWithoutFeedback>
   );
