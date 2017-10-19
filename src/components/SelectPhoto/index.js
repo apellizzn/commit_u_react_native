@@ -24,6 +24,7 @@ export default class SelectPhoto extends React.Component {
       allowsEditing: true,
       aspect: [16, 9],
     });
+
     if (!result.cancelled) {
       this.setState({ image: result.uri }, () => {
         this.props.onImageSelected(result.uri);

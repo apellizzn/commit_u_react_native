@@ -25,7 +25,8 @@ class CardsScreen extends React.PureComponent {
   }
 
   seed = () => {
-    const seed = this.props.navigation.state.params.photos.map(photo => (
+    const { navigation: { state: { params: { photos } } } } = this.props;
+    const seed = photos.map(photo => (
       { label: photo, flipped: false }
     ));
     const cards = this.shuffle([...seed, ...seed])

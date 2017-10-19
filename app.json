@@ -17,6 +17,9 @@
       "scheme": "expf3815010f08b414784908b4efa66c3eb",
       "iosExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/ios-v1.20.5-sdk21.0.0-11e2eb3f-807e-48d4-8685-b0694f874637.tar.gz",
       "androidExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/android-v1.20.0-sdk21.0.0-38791499-fe99-4600-950d-cf7e2e85cea9.tar.gz"
+    },
+    "packagerOpts": {
+      "assetExts": ["ttf"]
     }
   }
 }
